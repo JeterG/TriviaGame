@@ -1,7 +1,12 @@
 import requests
 import random
-response=requests.get("https://opentdb.com/api.php?amount=50")
-data=response.json()['results']
+import json
+from random import randrange
+# response=requests.get("https://opentdb.com/api.php?amount=1")#use this for api call
+# data=response.json()['results']#use this with api call
+with open('api.json') as f:
+    response=json.load(f)
+data=response['results']
 def display(problem):
     if data[problem]['type']=='multiple':
         print(problem+1,": ",data[problem]['question'])
@@ -19,11 +24,12 @@ def display(problem):
         for key,value in labledChoice.items():
             print("\t\t",key,':',value)
 
-        # submission = input("Choice:")
-        # if submission.upper()
-        print(labledChoice['A'])
+        submission = input("Choice:")
+        if labledChoice[submission.upper()]==data[problem]['correct_answer']:
+            print("Correct")
+        print("Incorrect")
     else:
         print(problem+1,": ",data[problem]['question'])
         print("\t\t",'True')
         print("\t\t",'False')
-display(0)
+display(randrange(50))
