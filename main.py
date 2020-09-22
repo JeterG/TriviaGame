@@ -38,4 +38,8 @@ def display(problem):
             print('Correct')
         else:
             print('Incorrect')
-display(randrange(50))
+def problems(amount):
+    for problem in range(amount):
+        display(problem)
+# display(randrange(50))
+problems(randrange(50))
