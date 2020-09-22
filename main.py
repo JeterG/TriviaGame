@@ -8,6 +8,7 @@ with open('api.json') as f:
     response=json.load(f)
 data=response['results']
 def display(problem):
+    letters=['A','B','C','D']
     if data[problem]['type']=='multiple':
         print(problem+1,": ",data[problem]['question'])
         choices=[data[problem]['incorrect_answers'][0],
@@ -25,10 +26,16 @@ def display(problem):
             print("\t\t",key,':',value)
 
         submission = input("Choice:")
-        if labledChoice[submission.upper()]==data[problem]['correct_answer']:
-            print("Correct")
+        if submission.upper() in letters:
+            if labledChoice[submission.upper()]==data[problem]['correct_answer']:
+                print('Correct')
+                return 0
+            else:
+                print('Incorrect')
+                return -1
         else:
-            print("Incorrect")
+            print('Incorrect')
+            return -1
     else:
         print(problem+1,": ",data[problem]['question'])
         print("\t\t",'True')
@@ -36,10 +43,16 @@ def display(problem):
         submission = input("Choice:")
         if submission.upper()==data[problem]['correct_answer'].upper():
             print('Correct')
+            return 0
+
         else:
             print('Incorrect')
+            return -1
 def problems(amount):
+    score=amount
     for problem in range(amount):
-        display(problem)
+        score+=display(problem)
+    print (score,amount)
 # display(randrange(50))
-problems(randrange(50))
+# problems(randrange(50))
+problems(10)
