@@ -27,9 +27,15 @@ def display(problem):
         submission = input("Choice:")
         if labledChoice[submission.upper()]==data[problem]['correct_answer']:
             print("Correct")
-        print("Incorrect")
+        else:
+            print("Incorrect")
     else:
         print(problem+1,": ",data[problem]['question'])
         print("\t\t",'True')
         print("\t\t",'False')
+        submission = input("Choice:")
+        if submission.upper()==data[problem]['correct_answer'].upper():
+            print('Correct')
+        else:
+            print('Incorrect')
 display(randrange(50))
