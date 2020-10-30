@@ -1,12 +1,28 @@
 import requests
 import random
 import json
+from tkinter import Tk, Label, Button, StringVar
 from random import randrange
 # response=requests.get("https://opentdb.com/api.php?amount=1")#use this for api call
 # data=response.json()['results']#use this with api call
 with open('api.json') as f:
     response=json.load(f)
 data=response['results']
+counter=0
+def nextValue():
+    global counter
+    counter+=1
+    Q.set(counter)
+
+window=Tk()
+Q=StringVar()
+Q.set("Testf")
+window.title("Trivia Game")
+window.geometry("800x600")
+window.label = Label(window, textvariable=Q).pack()
+NextProblem=Button(window,text="text",command=nextValue).pack()
+
+
 def display(problem):
     letters=['A','B','C','D']
     if data[problem]['type']=='multiple':
@@ -52,7 +68,29 @@ def problems(amount):
     score=amount
     for problem in range(amount):
         score+=display(problem)
-    print (score,amount)
+    print (100*score/amount,'%')
 # display(randrange(50))
 # problems(randrange(50))
-problems(10)
+# problems(10)
+class GUI:
+    def __init__(self,master):
+        self.master = master
+        master.title("Trivia Game")
+
+        self.label = Label(master, textvariable=Q)
+        self.label.pack()
+
+        self.greet_button = Button(master, text="Choice",command=self.greet )
+        self.greet_button.pack()
+
+        self.close_button = Button(master, text="Close", command=master.quit)
+        self.close_button.pack()
+
+    def greet(self):
+        print("Greetings!")
+
+
+# root = Tk()
+# gui=GUI(root)
+# root.mainloop()
+window.mainloop()
